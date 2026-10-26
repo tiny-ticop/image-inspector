@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>糸領域マスク確認</title><link rel="stylesheet" href="/style.css">
+<header><div><h1>糸領域マスク確認</h1><p>原画像と糸領域を照合して、参照GTの品質を確認</p></div><span id="progress"></span></header>
+<main>
+<section class="toolbar">
+<label>機台<select id="machine"></select></label><label>機台角度<select id="angle"></select></label>
+<label>確認状態<select id="filter"><option value="all">すべて</option><option value="unreviewed">未確認</option><option value="ok">問題なし</option><option value="fix">要修正</option><option value="hold">判断保留</option></select></label>
+<label><input type="checkbox" id="issues">空マスク・データ不備のみ</label>
+<a href="/api/export.csv" download="mask_reviews.csv">CSV出力</a><a href="/api/export.json" download="mask_reviews.json">JSON出力</a>
+</section>
+<section class="toolbar navigation"><button id="prev">← 前へ</button><input id="position" type="number" min="1" aria-label="画像番号"><span id="count"></span><button id="next">次へ →</button><strong id="filename"></strong></section>
+<section class="toolbar"><label>重畳の濃さ<input id="opacity" type="range" min="0" max="100" value="45"></label><span id="opacityValue">45%</span><label><input id="overlay" type="checkbox" checked>マスクを表示</label><label>表示倍率<select id="zoom"><option value="fit">全体表示</option><option value="1">原寸 100%</option><option value="2">200%</option><option value="4">400%</option></select></label><span class="hint">拡大後のスクロールは左右連動 ／ 画像送り：← →</span></section>
+<section class="toolbar"><label>選択する種別<select id="regionLabel"><option value="weft">緯糸（青）</option><option value="warp">経糸（緑）</option><option value="overlap">重なり（紫）</option><option value="unknown">判別不能（黄）</option></select></label><button id="cancel">ドラッグを取消</button><label><input id="showRegions" type="checkbox" checked>種別を表示</label><a id="labelsDownload" download="thread_classes.png">種別マスクPNG出力</a><span id="drawState" class="hint">左画像で左ボタンを押しながらドラッグ。離すと接触した糸マスク全体を登録</span></section>
+<div id="regionList"></div><div id="detail"></div>
+<section class="panels"><article><h2>原画像</h2><div class="viewport" id="left"><div class="stage"><img id="raw" alt="原画像"><svg id="regionsLeft" class="regions"></svg></div></div></article><article><h2>原画像 ＋ 糸領域 <span class="legend">■ オレンジ：マスク値1</span></h2><div class="viewport" id="right"><div class="stage"><img id="base" alt="重畳用原画像"><img id="mask" alt="糸領域マスク"><img id="classOverlay" alt="選択した糸の種別"><svg id="regionsRight" class="regions"></svg></div></div></article></section>
+<section class="review"><label>確認結果<select id="status"><option value="unreviewed">未確認</option><option value="ok">問題なし</option><option value="fix">要修正</option><option value="hold">判断保留</option></select></label><label class="note">メモ<textarea id="note" rows="2" maxlength="10000" placeholder="例：右側の経糸が未マスク／部品まで含まれる"></textarea></label><button id="save">保存</button><span id="saveState" role="status"></span></section>
+<p class="hint">状態変更・メモ編集は自動保存します。未確認はGTとして承認済みを意味しません。緯糸・経糸は同じ色で表示されます。</p>
+<p id="error" role="alert"></p>
+</main><script src="/app.js"></script></html>

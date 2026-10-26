@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68,<81"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loom-image-tools"
+version = "0.1.0"
+description = "Local image sequence viewer, variation exploration and mask review"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[project.optional-dependencies]
+review = ["Pillow==12.3.0"]
+viewer = ["numpy==2.5.3", "opencv-python-headless==5.0.0.93", "scikit-learn==1.9.1", "joblib==1.6.0", "scipy==1.18.1"]
+
+[project.scripts]
+frame-viewer = "frame_viewer.server:main"
+mask-review = "mask_review_tool.scripts.server:main"
+
+[tool.setuptools]
+packages = ["loom_tools", "frame_viewer", "mask_review_tool", "mask_review_tool.scripts"]
+
+[tool.setuptools.package-data]
+frame_viewer = ["viewer/*.html", "viewer/*.js", "viewer/*.css"]
+mask_review_tool = ["viewer/*.html", "viewer/*.js", "viewer/*.css"]

@@ -1,0 +1,6 @@
+{
+  "raw_dir": "./data/raw",
+  "mask_dir": "./data/masks",
+  "frame_viewer": {"output_dir": "./frame_viewer/outputs", "port": 8769},
+  "mask_review_tool": {"output_dir": "./mask_review_tool/outputs", "port": 8765}
+}

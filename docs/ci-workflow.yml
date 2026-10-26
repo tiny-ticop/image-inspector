@@ -1,0 +1,36 @@
+name: Windows portable tools
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          architecture: x64
+          cache: pip
+          cache-dependency-path: requirements.lock.txt
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: First-time setup and repeatability
+        shell: powershell
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1
+          powershell -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1 --check-only
+      - name: Synthetic unit and HTTP tests
+        shell: powershell
+        run: |
+          & .\.venv\Scripts\python.exe -m unittest discover -s tests
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & .\.venv\Scripts\python.exe -m unittest discover -s frame_viewer/tests -p 'test_*.py'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node .\frame_viewer\tests\test_player.cjs
+      - name: Both tools in Chrome or Edge
+        shell: powershell
+        run: .\.venv\Scripts\python.exe scripts/browser_smoke.py

@@ -1,0 +1,9 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>機台画像 コマ送りビューア</title><link rel="stylesheet" href="/style.css">
+<header><h1>機台画像 コマ送りビューア</h1><span id="total">画像一覧を読み込み中…</span></header>
+<main><p class="notice">別周期に撮影した画像の比較表示です。角度をまたぐ再生も、同一周期の連続撮影を意味しません。複数機台の画像位置・撮影時刻は同期していません。</p>
+<section class="selection"><strong>表示する機台</strong><div id="machines"></div><button id="selectAll">すべて表示</button></section>
+<section class="toolbar"><label>速度<select id="speed"><option value="1">1コマ／秒</option><option value="2" selected>2コマ／秒</option><option value="5">5コマ／秒</option><option value="10">10コマ／秒</option></select></label><label><input type="checkbox" id="loop" checked>繰り返し再生</label><label>表示<select id="zoom"><option value="fit">全体表示</option><option value="1">原寸 100%</option><option value="2">200%</option></select></label></section>
+<section class="transport"><button id="first">すべて先頭</button><button id="prev">← 1枚前</button><button id="play">▶ まとめて再生</button><button id="next">1枚次 →</button><button id="last">すべて末尾</button><span id="state" role="status"></span></section>
+<section id="variationControls"></section><section id="discoveryControls"></section><p id="error" role="alert"></p><div id="panels"></div><p id="empty" hidden>表示する機台を選択してください。</p>
+<p class="hint">← →：すべての機台を1枚ずつ移動 ／ Space：まとめて再生・一時停止。繰り返し再生は初期状態で有効です。拡大時は各画像をスクロールできます。</p>
+</main><script src="/player.js"></script><script src="/variation.js"></script><script src="/discovery.js"></script><script src="/app.js"></script></html>

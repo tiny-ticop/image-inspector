@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+/data/
+/thread_classification/
+**/outputs/
+/release/
+/build/
+/dist/
+*.egg-info/
+*.pyc
+config.local*.json
+.env
+.env.*
+.pytest_cache/
+**/.browser-*/
